@@ -47,7 +47,7 @@ public class PriceCalculator {
 
     private Coupon findCouponIfIsProvided(List<Coupon> coupons, Category category) {
         for (Coupon coupon : coupons) {
-            if (category == null){
+            if (category == null) {
                 if (coupon.getCategory() == null) {
                     return coupon;
                 }
@@ -85,6 +85,7 @@ public class PriceCalculator {
         }
         return sum;
     }
+
     private double calculatePriceForCouponWithNoCategory(List<Product> products, List<Coupon> coupons,
                                                          double sum) {
         double discount = coupons.get(0).getDiscountPercentageInDecimalFraction();
