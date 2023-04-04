@@ -16,14 +16,9 @@ public class PriceCalculator {
     }
 
     private double calculateCheapestPrice(List<Product> products, List<Coupon> coupons) {
-        double bestPrice = 1000000000;
+        double bestPrice = Double.MAX_VALUE;
         for (Coupon coupon : coupons) {
-            double sum = 0;
-            if (coupon.getCategory() == null) {
-                sum = calculatePriceNoCategory(products, coupon);
-            } else {
-                sum = calculatePriceWithCategory(products, coupon);
-            }
+            double sum = calculatePrices(products, coupon);
             if (sum < bestPrice) {
                 bestPrice = sum;
             }
@@ -31,23 +26,15 @@ public class PriceCalculator {
         return bestPrice;
     }
 
-    private double calculatePriceWithCategory(List<Product> products, Coupon coupon) {
+    private double calculatePrices(List<Product> products, Coupon coupon) {
         double sum = 0;
         double discount = coupon.getDiscountPercentageInDecimalFraction();
         for (Product product : products) {
-            if (coupon.getCategory() == product.getCategory()) {
+            if (coupon.getCategory() == null || coupon.getCategory() == product.getCategory()) {
                 sum += Math.round(discount * product.getPrice() * 100.0) / 100.0;
             } else {
                 sum += product.getPrice();
             }
-        }
-        return sum;
-    }
-
-    private double calculatePriceNoCategory(List<Product> products, Coupon coupon) {
-        double sum = 0;
-        for (Product product : products) {
-            sum += Math.round(product.getPrice() * coupon.getDiscountPercentageInDecimalFraction() * 100.0) / 100.0;
         }
         return sum;
     }
