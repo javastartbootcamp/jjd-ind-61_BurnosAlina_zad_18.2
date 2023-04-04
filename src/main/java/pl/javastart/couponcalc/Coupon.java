@@ -10,6 +10,10 @@ public class Coupon {
         this.discountValueInPercents = discountValueInPercents;
     }
 
+    double getDiscountPercentageInDecimalFraction() {
+        return 1 - (((double) discountValueInPercents) / 100);
+    }
+
     public Category getCategory() {
         return category;
     }
